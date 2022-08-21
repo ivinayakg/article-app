@@ -29,7 +29,7 @@ app.use(helmet());
 app.use(xss());
 app.use(cors(corsOptions));
 
-app.use("/v1", require("./routes"));
+app.use("", require("./routes"));
 
 const port = process.env.PORT || 8000;
 
