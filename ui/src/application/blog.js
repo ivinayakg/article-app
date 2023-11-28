@@ -19,6 +19,13 @@ const deleteArticle = (token, articleId) =>
 const updateArticle = (token, data) =>
   axios.put("/article", data, createTokenHeader(token));
 
+const getSelfArticles = async (token) => {
+  const res = await axios.get("/article/user/self", createTokenHeader(token));
+  return res.data.data;
+};
+
+export const useGetSelfArticles = (token) =>
+  useQuery("get-self-articles", () => getSelfArticles(token));
 export const useGetAllArticles = (query) =>
   useQuery("get-all-articles", () => getAllArticles(query));
 export const useGetOneArticle = (articleId) =>

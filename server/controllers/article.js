@@ -45,6 +45,23 @@ const updateArticle = async (req, res) => {
     return res.status(404).json({ success: false, error });
   }
 };
+const getSelfArticle = async (req, res) => {
+  const { _id: userId } = req.user;
+  try {
+    const selfArticles = await Article.find({
+      userId,
+    }).populate({
+      path: "userId",
+      select: ["username"],
+    });
+    if (!selfArticles) {
+      throw Error("Article Document Is Not Present");
+    }
+    return res.status(202).json({ success: true, data: selfArticles });
+  } catch (error) {
+    return res.status(404).json({ success: false, error });
+  }
+};
 
 const getAllArticle = async (req, res) => {
   let { limit, before } = req.query;
@@ -68,7 +85,7 @@ const getAllArticle = async (req, res) => {
       })
       .populate({
         path: "userId",
-        select: ["name"],
+        select: ["username"],
       });
 
     return res.status(202).json({ success: true, data: allArticles });
@@ -82,7 +99,7 @@ const getOneArticle = async (req, res) => {
   try {
     const article = await Article.findOne({ _id: articleId }).populate({
       path: "userId",
-      select: ["name"],
+      select: ["username"],
     });
     return res.status(202).json({ success: true, data: article });
   } catch (error) {
@@ -96,4 +113,5 @@ module.exports = {
   getAllArticle,
   getOneArticle,
   updateArticle,
+  getSelfArticle,
 };

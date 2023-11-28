@@ -5,6 +5,7 @@ const {
   createArticle,
   deleteArticle,
   updateArticle,
+  getSelfArticle
 } = require("../controllers/article");
 const { login, createUser } = require("../controllers/auth");
 const { getAllLikes, addLike, removeLike } = require("../controllers/like");
@@ -22,6 +23,7 @@ router.get("/likes", getAllLikes);
 
 //private queries
 router.post("/article", authenticateUser, createArticle);
+router.get("/article/user/self", authenticateUser, getSelfArticle);
 router.delete("/article/:articleId", authenticateUser, deleteArticle);
 router.put("/article", authenticateUser, updateArticle);
 

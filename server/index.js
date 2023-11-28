@@ -1,5 +1,5 @@
 require("dotenv").config();
-
+require('express-async-errors');
 const express = require("express");
 const app = express();
 
@@ -13,6 +13,7 @@ const cors = require("cors");
 const whitelist = [];
 const corsOptions = {
   origin: function (origin, callback) {
+    return callback(null, true);
     if (process.env.mode === "DEVELOPMENT") {
       return callback(null, true);
     }
@@ -27,7 +28,10 @@ app.use(express.json());
 
 app.use(helmet());
 app.use(xss());
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
 
 app.use("", require("./routes"));
 
