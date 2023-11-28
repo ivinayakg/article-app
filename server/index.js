@@ -1,37 +1,37 @@
 require("dotenv").config();
-require('express-async-errors');
+require("express-async-errors");
 const express = require("express");
 const app = express();
 
 const connectDB = require("./db");
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",")
+  : [];
 
 //middleware
 const helmet = require("helmet");
 const xss = require("xss-clean");
 const cors = require("cors");
 
-const whitelist = [];
-const corsOptions = {
-  origin: function (origin, callback) {
-    return callback(null, true);
-    if (process.env.mode === "DEVELOPMENT") {
-      return callback(null, true);
-    }
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-};
 app.use(express.json());
 
 app.use(helmet());
 app.use(xss());
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true,
-}));
+
+// Enable CORS with dynamic origin based on the request
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Check if the origin is in the allowedOrigins array or if it's undefined (for same-origin requests)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 
 app.use("", require("./routes"));
 
