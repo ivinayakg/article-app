@@ -5,6 +5,6 @@ const connectDB = (url) => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-};
+}
 
 module.exports = connectDB;
