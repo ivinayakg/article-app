@@ -39,6 +39,8 @@ app.use("", require("./routes"));
 const port = process.env.PORT || 8000;
 
 const start = async () => {
+  console.log("Starting server...");
+  console.log(allowedOrigins);
   try {
     await connectDB(process.env.MONGO_);
     app.listen(port, () =>
