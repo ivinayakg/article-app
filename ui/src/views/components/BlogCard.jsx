@@ -6,7 +6,7 @@ const BlogCard = ({ blog }) => {
   return (
     <div
       key={blog._id}
-      className="container max-w-4xl px-10 py-6 mx-auto rounded-lg shadow-sm bg-gray-200 "
+      className="container max-w-4xl px-10 py-6 mx-auto rounded-lg shadow-sm bg-[rgb(233 229 222 / 49%)] "
     >
       <div className="mt-3">
         <Link

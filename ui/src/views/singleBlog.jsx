@@ -24,9 +24,10 @@ const SingleBlog = () => {
 
   const user = getFromStorage("user", true);
 
-  const canUpdate = user._id === data.userId._id;
+  const canUpdate = user && user._id === data.userId._id;
 
   const deleteArticle = async () => {
+    if (!user) return;
     try {
       deleteArticleMutate(
         { token: getFromStorage("token"), articleId: data._id },
@@ -58,9 +59,11 @@ const SingleBlog = () => {
           <h1 className="text-5xl font-bold leading-none">{data.title}</h1>
 
           <div className="text-sm dark:text-gray-400">
-            by
-            <p className="hover:underline dark:text-violet-400">
-              <span>{data.userId.name ?? ""}</span>
+            <p>
+              by{" "}
+              <span className="hover:underline dark:text-violet-400">
+                {data.userId.username ?? "Anonymous"}
+              </span>
             </p>
             on {new Date(data.updatedAt).toDateString()}
           </div>

@@ -29,12 +29,12 @@ function App() {
             <Route index element={<Create />} />
           </Route>
           <Route path="/my-blogs" element={<MyBlog />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/blog/:_id" element={<SingleBlog />} />
         </Route>
         {/* public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/blog/:_id" element={<SingleBlog />} />
       </Routes>
     </div>
   );

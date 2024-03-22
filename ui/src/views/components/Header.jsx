@@ -12,12 +12,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 const MenuLinks = [
   {
-    name: "Home",
-    href: "/",
-    icon: HomeIcon,
-    private: true,
-  },
-  {
     name: "My Blog",
     href: "/my-blogs",
     icon: UserIcon,
@@ -34,6 +28,7 @@ const MenuLinks = [
 const Header = () => {
   const isAuth = getFromStorage("isAuth", true);
   const navigate = useNavigate();
+  const user = isAuth ? getFromStorage("user", true) : null;
 
   return (
     <Popover className="relative bg-white">
@@ -41,7 +36,7 @@ const Header = () => {
         <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link to={"/"}>
-              <h2 className="">Vinayak Goyal</h2>
+              <h2 className="text-2xl font-mono">ivinayakg_blog</h2>
             </Link>
           </div>
           <div className="-mr-2 -my-2 md:hidden">
@@ -51,6 +46,13 @@ const Header = () => {
             </Popover.Button>
           </div>
           <Popover.Group as="nav" className="hidden md:flex space-x-10">
+            <Link
+              key={"home"}
+              to={"/"}
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              Home
+            </Link>
             {isAuth &&
               MenuLinks.map((link) => (
                 <Link
@@ -111,7 +113,7 @@ const Header = () => {
             <div className="pt-5 pb-6 px-5">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="">Vinayak Goyal</h2>
+                  <h2 className="text-xl">ivinayakg_blog</h2>
                 </div>
                 <div className="-mr-2">
                   <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -122,6 +124,19 @@ const Header = () => {
               </div>
               <div className="mt-6">
                 <nav className="grid gap-y-8">
+                  <Link
+                    key={"home"}
+                    to={"/"}
+                    className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
+                  >
+                    <HomeIcon
+                      className="flex-shrink-0 h-6 w-6 text-indigo-600"
+                      aria-hidden="true"
+                    />
+                    <span className="ml-3 text-base font-medium text-gray-900">
+                      Home
+                    </span>
+                  </Link>
                   {MenuLinks.map((link) => {
                     if (link.private && !isAuth) {
                       return;

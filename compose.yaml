@@ -1,0 +1,7 @@
+name: "articleApp"
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: article-mongodb
+    ports:
+      - "27546:27017"
