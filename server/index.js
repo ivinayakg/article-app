@@ -21,15 +21,7 @@ app.use(xss());
 // Enable CORS with dynamic origin based on the request
 app.use(
   cors({
-    origin: function (origin, callback) {
-      console.log("origin", origin);
-      // Check if the origin is in the allowedOrigins array or if it's undefined (for same-origin requests)
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: allowedOrigins,
     credentials: true,
   })
 );
