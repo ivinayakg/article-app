@@ -21,7 +21,7 @@ app.use(xss());
 // Enable CORS with dynamic origin based on the request
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: "*",
     credentials: true,
   })
 );
@@ -30,9 +30,7 @@ app.use("", require("./routes"));
 
 const port = process.env.PORT || 8000;
 
-const start = async () => {
-  console.log("Starting server...");
-  console.log(allowedOrigins);
+const start = async () => { 
   try {
     await connectDB(process.env.MONGO_);
     app.listen(port, () =>
