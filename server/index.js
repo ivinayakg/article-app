@@ -22,6 +22,7 @@ app.use(xss());
 app.use(
   cors({
     origin: function (origin, callback) {
+      console.log("origin", origin);
       // Check if the origin is in the allowedOrigins array or if it's undefined (for same-origin requests)
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
